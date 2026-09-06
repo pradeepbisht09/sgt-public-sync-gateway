@@ -19,6 +19,14 @@ const app = express();
 app.disable("x-powered-by");
 app.use(express.json({ limit: "2mb" }));
 
+// Request logging for Render debugging
+app.use((req, res, next) => {
+  console.log(
+    `[REQUEST] ${req.method} ${req.originalUrl} | Origin: ${req.headers.origin || "-"}`
+  );
+  next();
+});
+
 // CORS
 app.use((req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
